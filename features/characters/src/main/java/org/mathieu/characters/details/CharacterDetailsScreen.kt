@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,6 +39,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -202,10 +204,23 @@ fun LocationCard(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .height(100.dp)
+            .height(150.dp)
             .padding(8.dp)
             .background(org.mathieu.ui.theme.Purple40)
     ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "LOCATION",
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
+        }
         Row(
             modifier = Modifier
             .fillMaxWidth()
@@ -214,7 +229,7 @@ fun LocationCard(
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = location.name,
+                text = "Name : " + location.name,
                 color = Color.White
             )
         }
@@ -227,7 +242,7 @@ fun LocationCard(
         ) {
             Spacer(modifier = Modifier.width(2.dp))
             Text(
-                text = location.type,
+                text = "Type : " + location.type,
                 color = Color.White
             )
         }

@@ -119,7 +119,7 @@ private fun LocationDetailsContent(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = state.location?.type ?: state.error ?: "Type non disponible",
+                        text = "Type : " + state.location?.type ?: state.error ?: "Type non disponible",
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -134,7 +134,7 @@ private fun LocationDetailsContent(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = state.location?.dimension ?: state.error ?: "Dimension non disponible",
+                        text = "Dimension : " + state.location?.dimension ?: state.error ?: "Dimension non disponible",
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
