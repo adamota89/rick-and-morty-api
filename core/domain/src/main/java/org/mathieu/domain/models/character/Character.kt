@@ -14,7 +14,7 @@ import org.mathieu.domain.models.location.LocationPreview
  * @property origin The origin location of the character, represented as a name and an id of location.
  * @property location The current or last known location of the character, represented as a name and an id of location.
  * @property avatarUrl A URL pointing to an avatar or image of the character.
- * @property locationPreviews A list of previews of location.
+ * @property locationPreviews A previews of the location.
  */
 data class Character(
     val id: Int,
@@ -26,7 +26,7 @@ data class Character(
     val origin: Pair<String, Int>,
     val location: Pair<String, Int>,
     val avatarUrl: String,
-    val locationPreviews: List<LocationPreview>
+    var locationPreviews: LocationPreview
 )
 
 /**

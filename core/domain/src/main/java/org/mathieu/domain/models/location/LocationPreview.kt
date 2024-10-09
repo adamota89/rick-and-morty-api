@@ -1,7 +1,5 @@
 package org.mathieu.domain.models.location
 
-import org.mathieu.domain.models.character.Character
-
 /**
  * Represents a specific preview location within a universe or dimension.
  *

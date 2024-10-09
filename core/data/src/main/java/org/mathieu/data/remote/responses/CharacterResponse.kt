@@ -1,6 +1,7 @@
 package org.mathieu.data.remote.responses
 
 import kotlinx.serialization.Serializable
+import org.mathieu.domain.models.location.LocationPreview
 
 /**
  * Represents detailed information about a character, typically received from an API response.

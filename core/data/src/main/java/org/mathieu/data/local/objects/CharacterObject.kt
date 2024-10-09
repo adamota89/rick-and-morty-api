@@ -1,10 +1,13 @@
 package org.mathieu.data.local.objects
 
 import io.realm.kotlin.types.RealmObject
+import io.realm.kotlin.types.annotations.Ignore
 import io.realm.kotlin.types.annotations.PrimaryKey
 import org.mathieu.data.remote.responses.CharacterResponse
 import org.mathieu.data.repositories.tryOrNull
 import org.mathieu.domain.models.character.*
+import org.mathieu.domain.models.location.Location
+import org.mathieu.domain.models.location.LocationPreview
 
 /**
  * Represents a character entity stored in the SQLite database. This object provides fields
@@ -38,8 +41,13 @@ internal class CharacterObject: RealmObject {
     var locationId: Int = -1
     var image: String = ""
     var created: String = ""
+    @Ignore var locationPreview: LocationPreview = LocationPreview(
+        id = 0,
+        name = "",
+        type = "",
+        dimension = ""
+    )
 }
-
 
 internal fun CharacterResponse.toRealmObject() = CharacterObject().also { obj ->
     obj.id = id
@@ -65,5 +73,6 @@ internal fun CharacterObject.toModel() = Character(
     gender = tryOrNull { CharacterGender.valueOf(gender) } ?: CharacterGender.Unknown,
     origin = originName to originId,
     location = locationName to locationId,
-    avatarUrl = image
+    avatarUrl = image,
+    locationPreviews = locationPreview
 )

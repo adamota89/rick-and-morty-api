@@ -7,6 +7,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import org.koin.core.component.inject
 import org.mathieu.data.local.CharacterLocal
 import org.mathieu.data.local.objects.CharacterObject
 import org.mathieu.data.local.objects.toModel
@@ -15,6 +16,8 @@ import org.mathieu.data.remote.CharacterApi
 import org.mathieu.data.remote.responses.CharacterResponse
 import org.mathieu.domain.repositories.CharacterRepository
 import org.mathieu.domain.models.character.Character
+import org.mathieu.domain.models.location.LocationPreview
+import org.mathieu.domain.repositories.LocationRepository
 
 private const val CHARACTER_PREFS = "character_repository_preferences"
 private val nextPage = intPreferencesKey("next_characters_page_to_load")
@@ -26,7 +29,8 @@ private val Context.dataStore by preferencesDataStore(
 internal class CharacterRepositoryImpl(
     private val context: Context,
     private val characterApi: CharacterApi,
-    private val characterLocal: CharacterLocal
+    private val characterLocal: CharacterLocal,
+    private val locationRepository: LocationRepository
 ) : CharacterRepository {
 
     override suspend fun getCharacters(): Flow<List<Character>> =
@@ -84,15 +88,32 @@ internal class CharacterRepositoryImpl(
      * @return The [Character] object representing the character details.
      * @throws Exception If the character cannot be found both locally and via the API.
      */
-    override suspend fun getCharacter(id: Int): Character =
-        characterLocal.getCharacter(id)?.toModel()
-            ?: characterApi.getCharacter(id = id)?.let { response ->
-                val obj = response.toRealmObject()
-                characterLocal.insert(obj)
-                obj.toModel()
-            }
-            ?: throw Exception("Character not found.")
+    override suspend fun getCharacter(id: Int): Character {
+        var CharacterLocal = characterLocal.getCharacter(id)?.toModel()
 
+
+        return if (CharacterLocal != null) {
+            val location = locationRepository.getLocation(CharacterLocal.location.second)
+
+            CharacterLocal.locationPreviews = LocationPreview(location.id, location.name, location.type, location.dimension)
+
+            CharacterLocal
+        } else {
+            characterApi.getCharacter(id = id)?.let { response ->
+                val obj = response.toRealmObject()
+
+                val location = locationRepository.getLocation(obj.locationId)
+
+                val characterModel = obj.toModel().copy(
+                    locationPreviews = LocationPreview(location.id, location.name, location.type, location.dimension)
+                )
+
+                characterLocal.insert(obj)
+
+                characterModel
+            } ?: throw Exception("Character not found.")
+        }
+    }
 
 }
 
