@@ -1,7 +1,5 @@
 package org.mathieu.domain.repositories
 
-import kotlinx.coroutines.flow.Flow
-import org.mathieu.domain.models.character.Character
 import org.mathieu.domain.models.location.Location
 
 interface LocationRepository {

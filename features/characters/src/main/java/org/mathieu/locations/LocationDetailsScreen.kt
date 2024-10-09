@@ -106,8 +106,8 @@ private fun LocationDetailsContent(
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(12.dp), // Espacement entre les éléments
-                horizontalAlignment = Alignment.CenterHorizontally // Centrer horizontalement les éléments
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
                     modifier = Modifier

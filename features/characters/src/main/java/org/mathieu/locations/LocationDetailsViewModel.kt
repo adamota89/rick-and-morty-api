@@ -35,7 +35,6 @@ class LocationDetailsViewModel(application: Application) : org.mathieu.ui.ViewMo
     }
 }
 
-// Mise à jour du data class pour l'état
 data class LocationDetailsState(
     val isLoading: Boolean = true,
     val error: String? = null,

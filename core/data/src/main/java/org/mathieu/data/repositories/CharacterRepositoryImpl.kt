@@ -80,24 +80,25 @@ internal class CharacterRepositoryImpl(
      *
      * The function follows these steps:
      * 1. Tries to fetch the character from the local storage.
-     * 2. If not found locally, it fetches the character from the API.
-     * 3. Upon successful API retrieval, it saves the character to local storage.
-     * 4. If the character is still not found, it throws an exception.
+     * 2. If found locally, it get the character location and create a LocationPreview with location data.
+     * 3. If not found locally, it fetches the character from the API.
+     * 4. it get the character location and create a LocationPreview with location data.
+     * 5. Upon successful API retrieval, it saves the character to local storage.
+     * 6. If the character is still not found, it throws an exception.
      *
      * @param id The unique identifier of the character to retrieve.
      * @return The [Character] object representing the character details.
      * @throws Exception If the character cannot be found both locally and via the API.
      */
     override suspend fun getCharacter(id: Int): Character {
-        var CharacterLocal = characterLocal.getCharacter(id)?.toModel()
 
+        var character = characterLocal.getCharacter(id)?.toModel()
 
-        return if (CharacterLocal != null) {
-            val location = locationRepository.getLocation(CharacterLocal.location.second)
+        return if (character != null) {
+            val location = locationRepository.getLocation(character.location.second)
+            character.locationPreviews = LocationPreview(location.id, location.name, location.type, location.dimension)
 
-            CharacterLocal.locationPreviews = LocationPreview(location.id, location.name, location.type, location.dimension)
-
-            CharacterLocal
+            character
         } else {
             characterApi.getCharacter(id = id)?.let { response ->
                 val obj = response.toRealmObject()
@@ -107,17 +108,13 @@ internal class CharacterRepositoryImpl(
                 val characterModel = obj.toModel().copy(
                     locationPreviews = LocationPreview(location.id, location.name, location.type, location.dimension)
                 )
-
                 characterLocal.insert(obj)
-
                 characterModel
             } ?: throw Exception("Character not found.")
         }
     }
 
 }
-
-
 fun <T> tryOrNull(block: () -> T) = try {
     block()
 } catch (_: Exception) {

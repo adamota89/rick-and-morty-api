@@ -8,14 +8,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import org.mathieu.data.local.LocationLocal
-import org.mathieu.data.local.objects.LocationObject
 import org.mathieu.data.local.objects.toModel
 import org.mathieu.data.local.objects.toRealmObject
 import org.mathieu.data.remote.LocationAPI
-import org.mathieu.domain.models.character.Character
 import org.mathieu.domain.models.location.Location
-import org.mathieu.domain.models.location.LocationPreview
-import org.mathieu.domain.repositories.CharacterRepository
 import org.mathieu.domain.repositories.LocationRepository
 
 

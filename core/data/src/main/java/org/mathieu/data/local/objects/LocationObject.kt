@@ -3,9 +3,7 @@ package org.mathieu.data.local.objects
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.Ignore
 import io.realm.kotlin.types.annotations.PrimaryKey
-import org.mathieu.data.remote.responses.CharacterResponse
 import org.mathieu.data.remote.responses.LocationResponse
-import org.mathieu.domain.models.character.Character
 import org.mathieu.domain.models.location.*
 
 /**

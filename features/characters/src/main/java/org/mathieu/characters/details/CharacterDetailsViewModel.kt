@@ -49,7 +49,6 @@ class CharacterDetailsViewModel(application: Application) : org.mathieu.ui.ViewM
         sendEvent(Destination.LocationDetails(locationId.toString()))
 }
 
-// Mise à jour du data class pour l'état
 data class CharacterDetailsState(
     val isLoading: Boolean = true,
     val avatarUrl: String = "",
